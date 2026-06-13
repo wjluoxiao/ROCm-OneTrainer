@@ -181,17 +181,29 @@ def tensors_record_stream(
         data: torch.Tensor | list | tuple | dict,
         include_parameter_indices: list[int] | None = None,
 ):
-    if isinstance(data, torch.Tensor):
-        if data.device.type == "cuda":
-            data.record_stream(stream)
-    elif isinstance(data, list | tuple):
-        for i, elem in enumerate(data):
-            if include_parameter_indices is None or i in include_parameter_indices:
-                # [] intentional - process all tensors inside the selected parameter(s)
-                tensors_record_stream(stream, elem, [])
-    elif isinstance(data, dict):
-        for elem in data.values():
-            tensors_record_stream(stream, elem)
+    try:
+        if isinstance(data, torch.Tensor):
+            if hasattr(data, 'record_stream'):
+                data.record_stream(stream)
+        elif isinstance(data, list | tuple):
+            for i, elem in enumerate(data):
+                if include_parameter_indices is None or i in include_parameter_indices:
+                    tensors_record_stream(stream, elem, None)  # NOT [elem] - recursive call
+        elif isinstance(data, dict) and include_parameter_indices is None:
+            for elem in data.values():
+                tensors_record_stream(stream, elem, None)
+    except Exception:
+        pass  # ROCm: record_stream may not be fully supported
+
+
+def torch_gc():
+    """ROCm-safe GPU memory cleanup"""
+    if torch.cuda.is_available():
+        try:
+            torch.cuda.synchronize()
+            torch.cuda.empty_cache()
+        except Exception:
+            pass
 
 
 def unpin_module(

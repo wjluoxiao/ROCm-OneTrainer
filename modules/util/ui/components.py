@@ -1,4 +1,6 @@
 import contextlib
+import json as _json_mod
+import os as _os
 import tkinter as tk
 from collections.abc import Callable
 from pathlib import Path
@@ -18,6 +20,35 @@ from PIL import Image
 
 PAD = 10
 
+# ── ROCm 版内置中文翻译 ──
+_ZH_DICT = None
+_ZH_PATH = _os.path.join(_os.path.dirname(__file__), "..", "..", "..", "locale", "zh_CN.json")
+
+def _load_zh():
+    global _ZH_DICT
+    if _ZH_DICT is not None:
+        return
+    _ZH_DICT = {}
+    if _os.path.exists(_ZH_PATH):
+        try:
+            with open(_ZH_PATH, "r", encoding="utf-8-sig") as _f:
+                _ZH_DICT = _json_mod.load(_f)
+        except Exception:
+            pass
+
+def _tr(text):
+    if not text or not isinstance(text, str):
+        return text
+    _load_zh()
+    if not _ZH_DICT:
+        return text
+    if text in _ZH_DICT:
+        return _ZH_DICT[text]
+    stripped = text.strip().rstrip(':').rstrip('.')
+    if stripped in _ZH_DICT:
+        return text.replace(stripped, _ZH_DICT[stripped])
+    return text
+
 
 def app_title(master, row, column):
     frame = ctk.CTkFrame(master)
@@ -35,7 +66,7 @@ def app_title(master, row, column):
 
 
 def label(master, row, column, text, pad=PAD, tooltip=None, wide_tooltip=False, wraplength=0):
-    component = ctk.CTkLabel(master, text=text, wraplength=wraplength)
+    component = ctk.CTkLabel(master, text=_tr(text), wraplength=wraplength)
     component.grid(row=row, column=column, padx=pad, pady=pad, sticky="nw")
     if tooltip:
         ToolTip(component, tooltip, wide=wide_tooltip)
@@ -348,7 +379,7 @@ def layer_filter_entry(master, row, column, ui_state: UIState, preset_var_name: 
     preset_set_layer_choice(layer_selector.get())
 
 def icon_button(master, row, column, text, command):
-    component = ctk.CTkButton(master, text=text, width=40, command=command)
+    component = ctk.CTkButton(master, text=_tr(text), width=40, command=command)
     component.grid(row=row, column=column, padx=PAD, pady=PAD, sticky="new")
     return component
 
@@ -358,7 +389,7 @@ def button(master, row, column, text, command, tooltip=None, **kwargs):
     padx = kwargs.pop('padx', PAD)
     pady = kwargs.pop('pady', PAD)
 
-    component = ctk.CTkButton(master, text=text, command=command, **kwargs)
+    component = ctk.CTkButton(master, text=_tr(text), command=command, **kwargs)
     component.grid(row=row, column=column, padx=padx, pady=pady, sticky="new")
     if tooltip:
         ToolTip(component, tooltip, x_position=25)
@@ -484,7 +515,7 @@ def switch(
     if command:
         trace_id = ui_state.add_var_trace(var_name, command)
 
-    component = ctk.CTkSwitch(master, variable=var, text=text, command=command)
+    component = ctk.CTkSwitch(master, variable=var, text=_tr(text), command=command)
     component.grid(row=row, column=column, padx=PAD, pady=(PAD, PAD), sticky="new")
 
     def create_destroy(component):

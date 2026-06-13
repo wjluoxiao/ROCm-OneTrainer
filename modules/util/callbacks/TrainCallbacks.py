@@ -44,7 +44,9 @@ class TrainCallbacks:
     def on_update_status(self, status: str):
         if self.__on_update_status:
             with contextlib.suppress(Exception):
-                self.__on_update_status(status)
+                # ROCm: translate status messages
+                from modules.util.ui.components import _tr
+                self.__on_update_status(_tr(status))
 
     # on_sample_default
     def set_on_sample_default(
