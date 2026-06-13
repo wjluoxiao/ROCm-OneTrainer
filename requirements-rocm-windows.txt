@@ -1,0 +1,74 @@
+# ═══════════════════════════════════════════════════════════
+# OneTrainer ROCm Windows 依赖清单
+# 适用于：已部署 ComfyUI 便携版 + ROCm 的环境
+# 使用：python_embeded\python.exe -m pip install -r requirements-rocm-windows.txt
+# ═══════════════════════════════════════════════════════════
+
+# ── 基础库 ──
+numpy
+opencv-python
+pillow
+tqdm
+PyYAML
+scipy
+matplotlib
+av
+scenedetect
+parse
+imagesize
+requests
+psutil
+omegaconf
+pooch
+deepdiff
+
+# ── PyTorch 生态（复用已有 ROCm torch，不重装）──
+accelerate
+safetensors
+
+# ── 可视化 ──
+tensorboard
+
+# ── HuggingFace ──
+transformers
+sentencepiece
+huggingface-hub
+gguf
+
+# ── 模型/扩散 ──
+-e git+https://github.com/huggingface/diffusers.git@0f1abc4#egg=diffusers
+open-clip-torch
+invisible-watermark
+
+# ── 数据加载 ──
+-e git+https://github.com/Nerogar/mgds.git@9320a69#egg=mgds
+
+# ── 优化器 ──
+dadaptation
+lion-pytorch
+prodigyopt
+schedulefree
+pytorch_optimizer
+prodigy-plus-schedule-free
+adv_optm
+-e git+https://github.com/KellerJordan/Muon.git@f90a42b#egg=muon-optimizer
+
+# ── UI ──
+customtkinter
+
+# ── ROCm 专用（替换 CUDA 包）──
+onnxruntime          # CPU 版，ROCm 无 GPU 版
+setuptools>=69,<70   # 提供 pkg_resources（TensorBoard 需要）
+
+# ── 工具 ──
+yt-dlp
+scalene
+runpod
+fabric
+
+# ── 以下已由 ComfyUI python_embeded 提供，无需重装 ──
+# torch (ROCm)
+# torchvision (ROCm)
+# torchaudio (ROCm)
+# triton (ROCm)
+# flash-attn / sageattention
