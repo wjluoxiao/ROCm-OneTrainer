@@ -15,7 +15,22 @@ from transformers import (
     LlamaModel,
     T5EncoderModel,
 )
-from transformers.tokenization_utils import PreTrainedTokenizer, Trie
+from transformers.tokenization_utils import PreTrainedTokenizer
+
+# transformers 5.x removed Trie, provide fallback
+try:
+    from transformers.tokenization_utils import Trie
+except ImportError:
+    from collections import defaultdict
+
+    class Trie:
+        """Minimal Trie backport for transformers >=5.0"""
+        def __init__(self):
+            self.data = defaultdict(set)
+
+        def add(self, word: str):
+            if word:
+                self.data[word[0]].add(word)
 
 
 class ModelSetupEmbeddingMixin(metaclass=ABCMeta):
@@ -31,8 +46,10 @@ class ModelSetupEmbeddingMixin(metaclass=ABCMeta):
             for key, added_token in added_tokens:
                 tokenizer._added_tokens_decoder.pop(key)
                 tokenizer._added_tokens_encoder.pop(added_token.content)
-            tokenizer.tokens_trie = Trie()
-            tokenizer._update_trie()
+            # Trie API removed in transformers >=5.0
+            if hasattr(tokenizer, 'tokens_trie') and hasattr(tokenizer, '_update_trie'):
+                tokenizer.tokens_trie = Trie()
+                tokenizer._update_trie()
 
     def _create_new_embedding(
             self,
