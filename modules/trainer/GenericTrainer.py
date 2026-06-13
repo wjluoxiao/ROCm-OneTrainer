@@ -74,7 +74,7 @@ class GenericTrainer(BaseTrainer):
             tensorboard_log_dir = os.path.join(config.workspace_dir, "tensorboard")
             os.makedirs(Path(tensorboard_log_dir).absolute(), exist_ok=True)
             self.tensorboard = SummaryWriter(os.path.join(tensorboard_log_dir, f"{config.save_filename_prefix}{get_string_timestamp()}"))
-            if config.tensorboard and not config.tensorboard_always_on:
+            if True:  # ROCm: force TensorBoard always on
                 super()._start_tensorboard()
 
         self.model = None
@@ -89,8 +89,12 @@ class GenericTrainer(BaseTrainer):
                 self.__clear_cache()
 
         if self.config.train_dtype.enable_tf():
-            torch.backends.cuda.matmul.allow_tf32 = True
-            torch.backends.cudnn.allow_tf32 = True
+            if self.train_device.type == "cuda":
+                torch.backends.cuda.matmul.allow_tf32 = True
+                try:
+                    torch.backends.cudnn.allow_tf32 = True
+                except Exception:
+                    pass  # ROCm: cudnn not available
 
         self.model_loader = self.create_model_loader()
         self.model_setup = self.create_model_setup()
@@ -882,7 +886,7 @@ class GenericTrainer(BaseTrainer):
         if multi.is_master():
             self.tensorboard.close()
 
-            if self.config.tensorboard and not self.config.tensorboard_always_on:
+            if True:  # ROCm: force TensorBoard always on
                 super()._stop_tensorboard()
 
         for handle in self.grad_hook_handles:

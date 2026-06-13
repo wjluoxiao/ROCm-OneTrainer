@@ -634,7 +634,9 @@ class TrainUI(ctk.CTk):
     def set_eta_label(self, train_progress: TrainProgress, max_step: int, max_epoch: int):
         eta_str = self._calculate_eta_string(train_progress, max_step, max_epoch)
         if eta_str is not None:
-            self.eta_label.configure(text=f"ETA: {eta_str}")
+            from modules.util.ui.components import _tr
+            eta_str = _tr(eta_str)
+            self.eta_label.configure(text=f"预计: {eta_str}")
         else:
             self.eta_label.configure(text="")
 
@@ -651,7 +653,8 @@ class TrainUI(ctk.CTk):
         self.set_eta_label(train_progress, max_step, max_epoch)
 
     def on_update_status(self, status: str):
-        self.status_label.configure(text=status)
+        from modules.util.ui.components import _tr
+        self.status_label.configure(text=_tr(status))
 
     def open_dataset_tool(self):
         window = CaptionUI(self, None, False)

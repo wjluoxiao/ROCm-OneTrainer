@@ -82,22 +82,30 @@ class BaseTrainer(
             self.config.training_method
         )
     def _start_tensorboard(self):
-        tensorboard_executable = os.path.join(os.path.dirname(sys.executable), "tensorboard")
+        # ROCm: use python -m tensorboard.main instead of tensorboard.exe wrapper
         tensorboard_log_dir = os.path.join(self.config.workspace_dir, "tensorboard")
 
         tensorboard_args = [
-            tensorboard_executable,
-            "--logdir",
-            tensorboard_log_dir,
-            "--port",
-            str(self.config.tensorboard_port),
+            sys.executable, "-m", "tensorboard.main",
+            "--logdir", tensorboard_log_dir,
+            "--port", str(self.config.tensorboard_port),
             "--samples_per_plugin=images=100,scalars=10000",
         ]
 
         if self.config.tensorboard_expose:
             tensorboard_args.append("--bind_all")
 
-        self.tensorboard_subprocess = subprocess.Popen(tensorboard_args)
+        try:
+            self.tensorboard_subprocess = subprocess.Popen(
+                tensorboard_args,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            print(f"[INFO] TensorBoard started at http://localhost:{self.config.tensorboard_port}/")
+        except Exception as e:
+            print(f"[WARN] TensorBoard failed to start: {e}")
+            self.tensorboard_subprocess = None
 
     def _stop_tensorboard(self):
-        self.tensorboard_subprocess.kill()
+        if self.tensorboard_subprocess:
+            self.tensorboard_subprocess.kill()
