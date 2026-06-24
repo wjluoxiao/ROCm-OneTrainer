@@ -126,6 +126,10 @@ def entry(
                 component._textvariable.trace_remove("write", component._textvariable_callback_name)  # type: ignore[union-attr]
             component._textvariable_callback_name = ""
 
+        # 💥 ctk 6.0 的 destroy() 检查 _textvariable != None 就 trace_remove，
+        #    必须在 original_destroy 之前无条件置 None，无论 callback_name 是否为空
+        component._textvariable = None  # type: ignore[attr-defined]
+
         if command is not None and trace_id is not None:
             ui_state.remove_var_trace(var_name, trace_id)
 

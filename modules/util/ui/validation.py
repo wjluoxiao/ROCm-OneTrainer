@@ -295,8 +295,14 @@ class FieldValidator:
                 comp._textvariable.trace_remove("write", comp._textvariable_callback_name)  # type: ignore[union-attr]
             comp._textvariable_callback_name = ""
 
-        comp.configure(textvariable=new_var)
+        # 💥 ctk 6.0 的 configure() 检查 _textvariable != None && != ""，
+        #    必须无条件置 None 防止 trace_remove("write", "")
+        comp._textvariable = None  # type: ignore[attr-defined]
 
+        try:
+            comp.configure(textvariable=new_var)
+        except Exception:
+            pass  # 防御 customtkinter 的 Tcl 命令已被垃圾回收
         if new_var is not None:
             comp._textvariable_callback_name = new_var.trace_add(
                 "write", comp._textvariable_callback
