@@ -13,6 +13,7 @@ from transformers import (
     CLIPTextModelWithProjection,
     Gemma2Model,
     LlamaModel,
+    PreTrainedTokenizer,
     T5EncoderModel,
 )
 from transformers.tokenization_utils import PreTrainedTokenizer
