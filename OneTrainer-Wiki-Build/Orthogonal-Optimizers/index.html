@@ -1,0 +1,2015 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Optimizers/">
+      
+      
+        <link rel="next" href="../Other-Tools-%E2%80%90-Helpful-Links/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Orthogonal Optimizers - OneTrainer 使用说明</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OneTrainer 使用说明" class="md-header__button md-logo" aria-label="OneTrainer 使用说明" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OneTrainer 使用说明
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Orthogonal Optimizers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OneTrainer 使用说明" class="md-nav__button md-logo" aria-label="OneTrainer 使用说明" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OneTrainer 使用说明
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Additional-Embeddings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Additional Embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Advanced-Optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Optimizers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Aspect-Ratio-Bucketing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    理解宽高比（AR）分桶：简单指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Backup-and-Save/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    备份选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chroma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chroma
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud-Training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Training
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Common-Mistakes-Coming-From-Kohya/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Mistakes Coming From Kohya
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概念选项卡概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Custom-Scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dev-Corner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dev Corner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developing-Locally%2C-Training-Remotely-on-Runpod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在云端开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Diffusion-Models-Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OneTrainer 中扩散模型的特定模型技术信息
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../F.A.Q./" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F.A.Q.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Flux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../General/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-Started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How-Validation-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Validation works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How-to-setup-and-evaluate-validation-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to setup and evaluate validation datasets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Info%2C-Guides-and-Lessons-Learned/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Info, Guides and Lessons Learned
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lessons-Learnt-and-Tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lessons Learnt and Tutorials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoRA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LoRA 选项选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Manually-setup-OneTrainer-in-Runpod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manually setup OneTrainer in Runpod
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model-Support-Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Support Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Onboarding-Guide-for-Newcomers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding Guide for Newcomers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OneTrainer-March-2024-Guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OneTrainer March 2024 Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分解优化器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orthogonal Optimizers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orthogonal Optimizers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        简单解释
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ 包含的优化器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ 包含的优化器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mathbfmuon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $\mathbf{Muon}$ 优化器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高级变体
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚙️ 配置选项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mathbfmuon_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 $\mathbf{Muon}$ 和最佳批量大小
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 $\mathbf{Muon}$ 和最佳批量大小">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#beta_1-mars-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📉 $\beta_1$ 和 近似 MARS-M 的缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mathbfmuon_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $\mathbf{Muon}$ 和权重衰减（正则化）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 快速使用配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 快速使用配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "我只想让它工作"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "我 VRAM 低"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "我的批量大小小（1-16）"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other-Tools-%E2%80%90-Helpful-Links/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other Tools ‐ Helpful Links
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prior-Prediction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    先验预测背景：
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用量化和编译的 LoRA 训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qwen Image
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sampling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    采样选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Some-programmes-that-complement-Cloudy-OT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Some programmes that complement Cloudy OT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../The-Program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Training-on-a-remote-Linux-Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training on a remote Linux Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_Footer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+     Footer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_Sidebar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+     Sidebar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        简单解释
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ 包含的优化器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ 包含的优化器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mathbfmuon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $\mathbf{Muon}$ 优化器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        高级变体
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚙️ 配置选项
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mathbfmuon_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 $\mathbf{Muon}$ 和最佳批量大小
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📊 $\mathbf{Muon}$ 和最佳批量大小">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#beta_1-mars-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📉 $\beta_1$ 和 近似 MARS-M 的缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mathbfmuon_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        $\mathbf{Muon}$ 和权重衰减（正则化）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✅ 快速使用配置
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✅ 快速使用配置">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "我只想让它工作"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "我 VRAM 低"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        "我的批量大小小（1-16）"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Orthogonal Optimizers</h1>
+
+<p>正交优化器是一类新的优化器，它们以不同于传统优化器（如 AdamW 或 SGD）的方式训练神经网络。</p>
+<h3 id="_1"><strong>简单解释</strong></h3>
+<p>传统优化器（例如 Adam、Prodigy、SGD）单独查看每个数字（参数）。它们会问："这个特定数字应该上升还是下降？"
+<strong>正交优化器</strong>将一层的参数作为一个整体（一个矩阵）来看待。它们强制更新在整个层上"平衡"。这防止模型专注于一个简单的模式而忽略其他重要细节，通常在更短的时间内带来更高质量的训练。</p>
+<blockquote>
+<p>ℹ️ <strong>注意：</strong> $\mathbf{Muon}$ 无法处理 1D 参数（偏置、归一化尺度、嵌入等）。因此，$\mathbf{Muon}$ 必须与辅助优化器（AdamW）配对来处理这些张量。</p>
+<p><strong>OneTrainer 为您处理所有这些复杂性。</strong> 您不需要手动分离您的层；这些优化器在使用 <code>MuonWithAuxAdam</code> 时会自动检测哪些层应该使用 $\mathbf{Muon}$，哪些应该使用标准优化器（AdamW）。</p>
+</blockquote>
+<hr />
+<h3 id="_2">🛠️ 包含的优化器</h3>
+<table>
+<thead>
+<tr>
+<th>优化器</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MUON</code></td>
+<td>原始的 $\mathbf{Muon}$，带有基本的辅助 AdamW。</td>
+</tr>
+<tr>
+<td><code>MUON_ADV</code></td>
+<td>高级 $\mathbf{Muon}$ 实现，带有辅助 AdamW_Adv。</td>
+</tr>
+<tr>
+<td><code>ADAMUON_ADV</code></td>
+<td>基于符号的正交化，带有自适应第二估计缩放。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mathbfmuon">$\mathbf{Muon}$ 优化器</h4>
+<p><strong>$\mathbf{Muon}$</strong>（MomentUm Orthogonalized by Newton-Schulz，通过 Newton-Schulz 正交化的动量）由 <a href="https://github.com/KellerJordan/$\mathbf{Muon}$">Keller Jordan</a> 引入。它专门为神经网络的内部 2D（矩阵）变换设计（例如，线性层、重塑的 Conv2D）。</p>
+<p>它结合了基本的 $\mathbf{Muon}$ 优化器和基本的辅助 Adam。</p>
+<h4 id="_3">高级变体</h4>
+<p>这些是带有额外改进和设置的 $\mathbf{Muon}$ 高级变体。</p>
+<table>
+<thead>
+<tr>
+<th>优化器</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Muon_adv</code></td>
+<td>高级 $\mathbf{Muon}$ 实现，带有 CANS、NorMuon、低秩正交和其他功能。</td>
+</tr>
+<tr>
+<td><code>AdaMuon_adv</code></td>
+<td>高级 AdaMuon 实现；结合了 $\mathbf{Muon}$ 的几何结构和 Adam 的自适应缩放以及基于符号的正交化。<strong>缺点：</strong> 它引入了新的优化器状态（与标准 Muon 相比，内存占用增加了一倍）。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>注意：</strong> 这些变体使用 <code>AdamW_Adv</code> 作为辅助优化器，继承了其所有功能。</li>
+</ul>
+<hr />
+<h3 id="_4">⚙️ 配置选项</h3>
+<ul>
+<li><strong>注意：</strong> 高级优化器页面中的 <a href="https://github.com/Nerogar/OneTrainer/wiki/Advanced-Optimizers/#a-universal-safe-features">通用安全功能</a> 也适用于此处。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">功能</th>
+<th style="text-align: left;">描述</th>
+<th style="text-align: left;">推荐用法</th>
+<th style="text-align: left;">性能影响</th>
+<th style="text-align: left;">理论基础</th>
+<th style="text-align: left;">兼容性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Newton-Schulz 迭代</strong></td>
+<td style="text-align: left;">"Newton-Schulz" 步骤是 $\mathbf{Muon}$ 的核心；它平衡更新矩阵。这控制了优化器尝试使更新"完美"的程度。</td>
+<td style="text-align: left;"><strong>默认：5。</strong> 保持为 5。</td>
+<td style="text-align: left;">降低它（3-4）会节省一点点速度但会降低质量。提高它（6+）通常是浪费精力。</td>
+<td style="text-align: left;"><a href="https://kellerjordan.github.io/posts/muon/">Newton-Schulz</a></td>
+<td style="text-align: left;">全部</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>加速 Newton-Schulz</strong></td>
+<td style="text-align: left;">启用 <strong>C</strong>hebyshev-<strong>A</strong>ccelerated <strong>N</strong>ewton-<strong>S</strong>chulz（<strong>CANS</strong>）。它不使用静态数学，而是在每一步动态计算最佳公式。</td>
+<td style="text-align: left;"><strong>默认：禁用。</strong> 如果使用，将 Newton-Schulz 迭代设置为 7（CANS 中的 7 ≈ 禁用时的 5）。</td>
+<td style="text-align: left;">使"清洁"过程更快、更准确。在更少的步骤中达到更好的正交性。</td>
+<td style="text-align: left;"><a href="https://arxiv.org/abs/2506.10935">切比雪夫加速</a></td>
+<td style="text-align: left;">高级变体</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>低秩正交化</strong></td>
+<td style="text-align: left;">不是对整个矩阵进行正交化，而是将矩阵草图化为更小的尺寸（<code>Ortho Rank</code>），对其进行正交化，然后投影回来。</td>
+<td style="text-align: left;"><strong>默认：禁用。</strong> 用于全微调；对 LoRA/OFT 禁用。</td>
+<td style="text-align: left;">在非常大的矩阵上（例如，全微调）显著加快步骤时间，并提高对噪声的鲁棒性。</td>
+<td style="text-align: left;"><a href="https://arxiv.org/abs/2509.11983">矩阵草图</a></td>
+<td style="text-align: left;">高级变体</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Nesterov 动量</strong></td>
+<td style="text-align: left;">应用 Nesterov 的"前瞻"属性。它将动量与原始梯度混合，以改进训练。</td>
+<td style="text-align: left;"><strong>默认：True。</strong> 保持启用。</td>
+<td style="text-align: left;">提高收敛速度和稳定性。</td>
+<td style="text-align: left;"><a href="http://www.cs.toronto.edu/~hinton/absps/momentum.pdf">Nesterov 加速</a></td>
+<td style="text-align: left;">全部。<br>• 原始 $\mathbf{Muon}$ 默认使用它。<br>• 如果 <code>Simplified AdEMAMix</code> 处于活动状态则禁用。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>简化 AdEMAMix</strong></td>
+<td style="text-align: left;">结合了长期动量，强调最近的梯度。由于 $\mathbf{Muon}$ 归一化，保留与没有它时相同的 LR。</td>
+<td style="text-align: left;"><strong>默认：禁用。</strong> 与 <strong>AdaMuon_adv</strong> 一起使用（使用更新的符号，忽略幅度）。</td>
+<td style="text-align: left;">在小批量大小下通过正确的调整表现更好。通过长期动量减轻优化器"遗忘"。</td>
+<td style="text-align: left;"><a href="https://arxiv.org/abs/2502.02431">简化 AdEMAMix</a></td>
+<td style="text-align: left;">高级变体</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RMS 重新缩放</strong></td>
+<td style="text-align: left;">缩放内部更新以匹配 AdamW。</td>
+<td style="text-align: left;"><strong>默认：True。保持开启。</strong> 允许您使用标准学习率。</td>
+<td style="text-align: left;">允许使用您习惯的标准学习率。</td>
+<td style="text-align: left;"><a href="https://arxiv.org/abs/2502.16982">RMS 归一化</a></td>
+<td style="text-align: left;">高级变体</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NorMuon 变体</strong></td>
+<td style="text-align: left;">向神经元添加"归一化"步骤，以保持正交更新一致并防止幅度漂移。</td>
+<td style="text-align: left;"><strong>默认：True。</strong> 推荐用于 <strong>Muon_adv</strong> 和 <strong>AdaMuon_adv</strong> 的所有情况。</td>
+<td style="text-align: left;"><strong>使 $\mathbf{Muon}$ 具有与 Adam 相同的方差。</strong><br><strong>AdaMuon 的大量 VRAM 节省</strong>（将状态转换为标量）。</td>
+<td style="text-align: left;"><a href="https://arxiv.org/abs/2510.05491">NorMuon</a></td>
+<td style="text-align: left;">高级变体</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>近似 MARS-M</strong></td>
+<td style="text-align: left;">向动量添加"校正"项，通过计算前一步和当前步梯度之间的差异，使其对损失景观的变化做出反应。</td>
+<td style="text-align: left;"><strong>默认：False。</strong> 如果您有额外的 VRAM 用于额外状态，则推荐。</td>
+<td style="text-align: left;"><strong>小批量训练更鲁棒、更稳定。</strong><br><strong>需要额外状态</strong>来存储前一步的梯度。</td>
+<td style="text-align: left;"><a href="https://arxiv.org/abs/2510.21800">MARS-M</a></td>
+<td style="text-align: left;">高级变体</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="mathbfmuon_1">📊 $\mathbf{Muon}$ 和最佳批量大小</h3>
+<p>根据一篇 <strong><a href="https://arxiv.org/abs/2507.01598">最近的论文</a></strong>，$\mathbf{Muon}$ 展示了一种关系，其中<strong>减小批量大小需要增加 $\beta_1$</strong>（动量的寿命）。</p>
+<p><img alt="image" src="https://github.com/user-attachments/assets/f30dec98-e36a-4356-a11d-f5f02486c31a" /></p>
+<p>本质上，当您的<strong>批量大小较小</strong>且您的<strong>数据集较大</strong>时，您需要<strong>更高的 $\beta_1$</strong>。</p>
+<p><strong>粗略示例：</strong>
+如果您的批量大小为 <strong>1</strong> 且有 <strong>800 张图像</strong>（$\text{repeat}=1$），则 $\beta_1$ 约为 <strong>0.999</strong> 是有益的。这确保动量有效地<strong>覆盖您的数据集</strong>（大约 1000 步的记忆）。您甚至可以进一步增加它以覆盖 <strong>2-4 个 epoch</strong>，尽管找到最佳的 $\beta_1$ 需要实验。这些值是近似的。</p>
+<h4 id="beta_1-mars-m">📉 $\beta_1$ 和 <strong>近似 MARS-M</strong> 的缺点</h4>
+<p>调整 $\beta_1$ 的主要困难是<strong>固有的权衡</strong>：</p>
+<ul>
+<li><strong>低 $\beta_1$</strong>（例如，0.95）$\rightarrow$ <strong>高响应性</strong>（快速适应最近的梯度）。</li>
+<li><strong>高 $\beta_1$</strong>（例如，0.999）$\rightarrow$ <strong>高平滑度</strong>（有效减少梯度噪声/更长的记忆）。</li>
+</ul>
+<p>最佳情况下，小批量大小（例如，$\mathbf{&lt;512}$）需要<strong>两者</strong>：响应性（适应有限信息）和平滑度（减轻较高的相对噪声）。</p>
+<blockquote>
+<p><strong>注意：</strong> 这种权衡是 <strong>简化 AdEMAMix</strong> 解决的核心思想，它混合了<strong>长期动量</strong>（用于噪声平滑）和<strong>原始当前梯度</strong>（用于响应性）。</p>
+</blockquote>
+<p><strong><code>近似 MARS-M</code></strong> 旨在平衡和结合这两个理想的特性。它通过有效地结合<strong>当前梯度步和前一梯度步之间的差异</strong>来修改动量更新。这种机制使动量对景观的突然变化<strong>做出反应</strong>，同时<strong>保留其长期记忆</strong>。</p>
+<p><strong>权衡：</strong> <strong><code>近似 MARS-M</code></strong> 需要额外的状态来存储前一步的梯度。然而，这对于 LoRA 训练或在全微调期间有备用 VRAM 时可以忽略不计。</p>
+<hr />
+<h3 id="mathbfmuon_2">$\mathbf{Muon}$ 和权重衰减（正则化）</h3>
+<p>$\mathbf{Muon}$ 训练很快；然而，<strong>没有权重衰减或正则化，它可能会过拟合</strong>，无法达到最佳结果，或<strong>实现较差的泛化</strong>。您应该考虑以下之一：</p>
+<ul>
+<li><strong>使用权重衰减：</strong> 典型值范围从 $0.01$ 到 $0.5$。</li>
+<li><strong>使用 OrthoGrad：</strong> OrthoGrad 引入了轻微的开销，但实现了权重衰减的好处，<strong>无需调整</strong>（您只需打开它）。</li>
+</ul>
+<hr />
+<h3 id="_5">✅ 快速使用配置</h3>
+<h4 id="_6">"我只想让它工作"配置：</h4>
+<ul>
+<li><strong>优化器：</strong> 默认 <code>Muon_adv</code></li>
+<li><strong>学习率：</strong>（与您用于 AdamW 的相同）</li>
+<li>⚠️ <strong>注意：</strong> 您可以使用原始的 $\mathbf{Muon}$，但它缺少 RMS 重新缩放选项。这导致与 AdamW 不同的 LR 比例（大约需要 10 倍更高的 LR 和 10 倍更小的权重衰减）。</li>
+</ul>
+<h4 id="vram">"我 VRAM 低"配置：</h4>
+<ul>
+<li><strong>优化器：</strong> <code>AdaMuon_adv</code>（由于基于符号的更新，比正常 $\mathbf{Muon}$ 更准确）。</li>
+<li><strong>融合反向传播：</strong> <code>True</code>（节省梯度内存占用）。</li>
+<li><strong>分解优化器：</strong> <code>True</code>（压缩状态）。</li>
+<li><strong>AuxAdam 分解优化器：</strong> <code>True</code>（也压缩 AuxAdam 状态）。</li>
+<li><strong>NorMuon 变体：</strong> <code>True</code>（将其转换为 1 状态优化器而不是 2 状态）。</li>
+<li><strong>其他：</strong> 与您通常/推荐的设置相同。</li>
+</ul>
+<h4 id="1-16">"我的批量大小小（1-16）"配置：</h4>
+<ul>
+<li><strong>优化器：</strong> <code>AdaMuon_adv</code>（AdaMuon 与简化 AdEMAMix 配对非常好）。</li>
+<li><strong>简化 AdEMAMix：</strong> <code>True</code></li>
+<li><strong>a 梯度：</strong> <code>100.0</code>（高响应性）。</li>
+<li><strong>beta1：</strong> <code>0.99</code> 到 <code>0.9999</code>（长期动量，取决于训练长度）。</li>
+<li><strong>其他：</strong> 与您通常/推荐的设置相同。</li>
+<li>⚠️ <strong>注意：</strong> 这适用于小批量大小（嘈杂训练）的长时间运行。作为近似，我建议此预设每个 epoch 至少有 100 个有效步骤（其中有效步骤 = 图像数 / 批量大小）。对于少于此的情况，0.95 Beta1 和 Nesterov 的默认值就可以正常工作。</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

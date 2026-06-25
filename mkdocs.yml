@@ -1,0 +1,10 @@
+﻿site_name: OneTrainer 使用说明
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+docs_dir: OneTrainer-Wiki
+site_dir: OneTrainer-Wiki-Build

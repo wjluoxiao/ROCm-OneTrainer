@@ -1,0 +1,2775 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Additional-Embeddings/">
+      
+      
+        <link rel="next" href="../Aspect-Ratio-Bucketing/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Advanced Optimizers - OneTrainer 使用说明</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OneTrainer 使用说明" class="md-header__button md-logo" aria-label="OneTrainer 使用说明" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OneTrainer 使用说明
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Advanced Optimizers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OneTrainer 使用说明" class="md-nav__button md-logo" aria-label="OneTrainer 使用说明" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OneTrainer 使用说明
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Additional-Embeddings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Additional Embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Optimizers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Optimizers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 最新动态
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔥 最新动态">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advoptm-222" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （AdvOptm 2.2.2 版本）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advoptm-12x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （AdvOptm 1.2.x 版本）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        包含的优化器：
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        包含的功能：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="包含的功能：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 通用安全功能
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. 单个功能：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        功能详情
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功能详情">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cautious-grams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cautious 和 Grams：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ademamix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdEMAMix：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AdEMAMix：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ademamix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdEMAMix 的可调超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplified_ademamix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified_AdEMAMix：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simplified_AdEMAMix：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simplified_ademamix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified_AdEMAMix 的可调超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplified-ademamix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何调优 Simplified AdEMAMix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何调优 Simplified AdEMAMix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#beta1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        beta1（长期动量）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alpha-grad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alpha Grad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atan2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atan2：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kourkoutas-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kourkoutas-β
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kourkoutas-β">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        优点/缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cwd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        谨慎权重衰减（CWD）：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="谨慎权重衰减（CWD）：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cautious-c-optim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与"Cautious 变体"（C-Optim）的比较
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#factored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factored 注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prodigy_adv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prodigy_Adv 注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lion_prodigy_adv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lion_Prodigy_Adv 注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚙️ 配置指南
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚙️ 配置指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🤏 "我的批量大小很小"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🥔 "我 VRAM 低"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧙‍♂️ "小 BS 的旧魔法预设"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Aspect-Ratio-Bucketing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    理解宽高比（AR）分桶：简单指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Backup-and-Save/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    备份选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chroma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chroma
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud-Training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Training
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Common-Mistakes-Coming-From-Kohya/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Mistakes Coming From Kohya
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概念选项卡概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Custom-Scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dev-Corner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dev Corner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developing-Locally%2C-Training-Remotely-on-Runpod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在云端开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Diffusion-Models-Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OneTrainer 中扩散模型的特定模型技术信息
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../F.A.Q./" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F.A.Q.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Flux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../General/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-Started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How-Validation-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Validation works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How-to-setup-and-evaluate-validation-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to setup and evaluate validation datasets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Info%2C-Guides-and-Lessons-Learned/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Info, Guides and Lessons Learned
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lessons-Learnt-and-Tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lessons Learnt and Tutorials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoRA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LoRA 选项选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Manually-setup-OneTrainer-in-Runpod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manually setup OneTrainer in Runpod
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model-Support-Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Support Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Onboarding-Guide-for-Newcomers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding Guide for Newcomers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OneTrainer-March-2024-Guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OneTrainer March 2024 Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分解优化器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Orthogonal-Optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orthogonal Optimizers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other-Tools-%E2%80%90-Helpful-Links/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other Tools ‐ Helpful Links
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prior-Prediction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    先验预测背景：
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用量化和编译的 LoRA 训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qwen Image
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sampling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    采样选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Some-programmes-that-complement-Cloudy-OT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Some programmes that complement Cloudy OT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../The-Program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Training-on-a-remote-Linux-Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training on a remote Linux Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_Footer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+     Footer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_Sidebar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+     Sidebar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 最新动态
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔥 最新动态">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#advoptm-222" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （AdvOptm 2.2.2 版本）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advoptm-12x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        （AdvOptm 1.2.x 版本）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        包含的优化器：
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        包含的功能：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="包含的功能：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. 通用安全功能
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. 单个功能：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        功能详情
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="功能详情">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cautious-grams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cautious 和 Grams：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ademamix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdEMAMix：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AdEMAMix：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ademamix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AdEMAMix 的可调超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplified_ademamix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified_AdEMAMix：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Simplified_AdEMAMix：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simplified_ademamix_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplified_AdEMAMix 的可调超参数
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplified-ademamix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        如何调优 Simplified AdEMAMix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="如何调优 Simplified AdEMAMix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#beta1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        beta1（长期动量）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alpha-grad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alpha Grad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#atan2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atan2：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kourkoutas-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kourkoutas-β
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kourkoutas-β">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        优点/缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cwd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        谨慎权重衰减（CWD）：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="谨慎权重衰减（CWD）：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cautious-c-optim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        与"Cautious 变体"（C-Optim）的比较
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#factored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Factored 注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prodigy_adv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prodigy_Adv 注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lion_prodigy_adv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lion_Prodigy_Adv 注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        其他注意事项：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚙️ 配置指南
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="⚙️ 配置指南">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🤏 "我的批量大小很小"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🥔 "我 VRAM 低"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧙‍♂️ "小 BS 的旧魔法预设"配置：
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Advanced Optimizers</h1>
+
+<p>这些是配备了学术研究论文中最新、<strong>高级</strong>技术和方法的<strong>优化器</strong>。</p>
+<p>每个功能都应该独立工作，但同时使用多个功能是<strong>实验性的</strong>，因为它们可能以有益或有害的方式相互作用。</p>
+<h3 id="_1">🔥 最新动态</h3>
+<h4 id="advoptm-222">（AdvOptm 2.2.2 版本）</h4>
+<ul>
+<li><code>Simplified AdEMAMix</code> 现在对于所有 <code>alpha grad</code> 和 <code>beta1</code> 值都具有与 AdamW 相同的 LR！</li>
+</ul>
+<h4 id="advoptm-12x">（AdvOptm 1.2.x 版本）</h4>
+<ul>
+<li>添加了带有最新论文<strong>功能</strong>和<strong>设置</strong>的 Muon 优化器<strong>高级变体</strong>，请参阅：<a href="https://github.com/Nerogar/OneTrainer/wiki/Orthogonal-Optimizers">正交优化器</a> 页面</li>
+<li>为所有 adv 优化器添加了谨慎权重衰减，请参阅：<a href="https://github.com/Nerogar/OneTrainer/wiki/Advanced-Optimizers#cautious-weight-decay-cwd">谨慎权重衰减</a> 部分</li>
+</ul>
+<hr />
+<h3 id="_2">包含的优化器：</h3>
+<ul>
+<li>在 UI 中带有 <code>_ADV</code> 后缀（Simplified_AdEMAMix 是例外）。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>优化器</th>
+<th>描述</th>
+<th>最适合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Adam_Adv</code></td>
+<td>高级 Adam 实现</td>
+<td>通用</td>
+</tr>
+<tr>
+<td><code>Adopt_Adv</code></td>
+<td>具有独立 beta2 的 Adam 变体</td>
+<td>小批量大小制度的稳定训练</td>
+</tr>
+<tr>
+<td><code>Prodigy_Adv</code></td>
+<td>带 D 适应的 Prodigy</td>
+<td>带自动 LR 调优的 Adam</td>
+</tr>
+<tr>
+<td><code>Simplified_AdEMAMix</code></td>
+<td>带累加器动量的 Adam 变体</td>
+<td>正确调优时的小/大批量训练</td>
+</tr>
+<tr>
+<td><code>Lion_Adv</code></td>
+<td>高级 Lion 实现</td>
+<td>通用</td>
+</tr>
+<tr>
+<td><code>Prodigy_Lion_Adv</code></td>
+<td>Prodigy + Lion 组合</td>
+<td>带自动 LR 调优的 Lion</td>
+</tr>
+<tr>
+<td>---</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">包含的功能：</h3>
+<h4 id="a">A. 通用安全功能</h4>
+<p><em>这些功能适用于所有优化器，通常可以安全启用。</em></p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>描述</th>
+<th>推荐用法</th>
+<th>性能影响</th>
+<th>理论基础</th>
+<th>兼容性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>融合反向传播</strong></td>
+<td>融合反向传播；梯度立即使用，内存即时释放。</td>
+<td>内存受限环境</td>
+<td>减少峰值内存</td>
+<td>内存优化</td>
+<td>所有优化器</td>
+</tr>
+<tr>
+<td><strong>随机舍入</strong></td>
+<td>用随机舍入替换最近舍入，以在 BF16 中保留小梯度更新。</td>
+<td>BF16 训练</td>
+<td>最小开销（&lt;5%）</td>
+<td><a href="https://arxiv.org/abs/2010.06192">重新审视 BFloat16 训练</a></td>
+<td>所有优化器</td>
+</tr>
+<tr>
+<td><strong>OrthoGrad</strong></td>
+<td>移除与权重平行的梯度分量以减少过拟合。</td>
+<td>不带权重衰减的全微调</td>
+<td>对于有效 BS=4，+33% 时间开销。EBS 越大 = 开销越小。</td>
+<td><a href="https://github.com/LucasPrietoAl/grokking-at-the-edge-of-numerical-stability">边缘处的 Grokking</a></td>
+<td>所有优化器</td>
+</tr>
+<tr>
+<td><strong>Factored</strong></td>
+<td>通过优化器状态的秩-1 1位分解实现内存高效优化。</td>
+<td>大模型 / 内存受限硬件</td>
+<td>增加压缩开销</td>
+<td><a href="https://arxiv.org/abs/2412.08894">SMMF</a></td>
+<td>所有优化器</td>
+</tr>
+<tr>
+<td><strong>谨慎权重衰减</strong></td>
+<td>仅当更新方向与参数符号对齐时才应用权重衰减的修改。</td>
+<td>通用（需要 <code>权重衰减 &gt; 0</code>）</td>
+<td>无开销</td>
+<td><a href="https://arxiv.org/abs/2510.12402">谨慎权重衰减</a></td>
+<td>所有优化器</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="b">B. 单个功能：</h4>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>描述</th>
+<th>推荐用法</th>
+<th>性能影响</th>
+<th>理论基础</th>
+<th>兼容性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cautious</strong></td>
+<td>仅当梯度方向与动量方向对齐时才应用更新。</td>
+<td>加速收敛</td>
+<td>无开销</td>
+<td><a href="https://github.com/kyleliang919/C-Optim">C-Optim</a></td>
+<td>Adam/Adopt/Prodigy/Lion</td>
+</tr>
+<tr>
+<td><strong>Grams</strong></td>
+<td>纯粹从当前梯度导出的更新方向。</td>
+<td>当 Cautious 不足时</td>
+<td>无开销</td>
+<td><a href="https://github.com/Gunale0926/Grams">Grams</a></td>
+<td>Adam/Adopt/Prodigy</td>
+</tr>
+<tr>
+<td><strong>AdEMAMix</strong></td>
+<td>双 EMA 系统，在数万步中保留梯度的相关性，加速收敛并减少遗忘</td>
+<td>长训练运行，特别是在模型遗忘是一个问题的地方</td>
+<td>+1 状态内存</td>
+<td><a href="https://arxiv.org/abs/2409.03137">AdEMAMix</a></td>
+<td>Adam/Adopt/Prodigy</td>
+</tr>
+<tr>
+<td><strong>Simplified_AdEMAMix</strong></td>
+<td>基于累加器的动量，AdEMAMix 的单 EMA 变体</td>
+<td>正确调优时的所有场景</td>
+<td>无开销</td>
+<td><a href="https://arxiv.org/abs/2502.02431">连接</a></td>
+<td>Adam/Adopt/Prodigy</td>
+</tr>
+<tr>
+<td><strong>atan2</strong></td>
+<td>带有内置梯度裁剪的稳健 epsilon 替代</td>
+<td>用于稳定的有界更新（或用于 Adopt，因为它需要这个）</td>
+<td>无开销</td>
+<td><a href="https://github.com/lucidrains/adam-atan2-pytorch">Adam-atan2</a></td>
+<td>Adam/Adopt/Prodigy</td>
+</tr>
+<tr>
+<td><strong>Kourkoutas-β</strong></td>
+<td>基于梯度"太阳尖峰"比率的逐层自适应 β₂</td>
+<td>嘈杂/小 BS/高 LR 训练</td>
+<td>最小开销</td>
+<td><a href="https://arxiv.org/abs/2508.12996">Kourkoutas-β</a></td>
+<td>Adam/Adopt/Prodigy/Simplified_AdEMAMix</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_4">功能详情</h3>
+<ul>
+<li>本教程针对小批量大小制度（1-64），因为这是 OT 的最大受众。</li>
+<li>大批量大小训练（≥512）应进行不同的调优。</li>
+</ul>
+<h4 id="cautious-grams">Cautious 和 Grams：</h4>
+<p>这两个共享相同的核心思想，即相对于原始梯度修改动量：</p>
+<ul>
+<li>
+<p><strong>Cautious</strong> 通过掩蔽和等待动量在更新前将其方向与原始梯度对齐来温和地做到这一点。</p>
+</li>
+<li>
+<p><strong>Grams</strong> 更激进，因为它迫使动量采用梯度的符号。</p>
+</li>
+</ul>
+<p>Grams 在其论文中被认为更好，但如果您愿意，可以使用其中<strong>一个</strong>。
+* 如果您同时启用两者，<strong>Grams 将被启用，Cautious 将被禁用。</strong></p>
+<h4 id="ademamix">AdEMAMix：</h4>
+<p>此功能为优化器添加了第二个 EMA，它衰减非常缓慢，并在数万步中保留记忆（取决于 <code>beta3</code> 值）。</p>
+<p>AdEMAMix 值得更多关注，原因如下：</p>
+<ol>
+<li>学术研究论文的理论和经验都证明，Adam 的第一矩对于小批量大小几乎没有用。您可以只使用第二矩，并且看不到任何区别。</li>
+</ol>
+<div align="left">
+  <img src="https://github.com/user-attachments/assets/0d5e8924-3654-454d-9cab-67f358abc0b3" width="400" height="350">
+</div>
+
+<p><em>参考：请查看论文中的"动量和批量大小"部分：</em><br />
+<a href="https://openreview.net/forum?id=fZqMVTz7K5">AdaMeM: Adafactor 的内存高效动量</a><br />
+- 因为它涵盖了大多数陈述这一点的论文。</p>
+<ol>
+<li>另一方面，AdEMAMix 的 EMA 已被证明对小批量大小非常有益。在这些场景中，您可以完全跳过 Adam 的 EMA，只使用 AdEMAMix 的 EMA。</li>
+</ol>
+<hr />
+<h5 id="ademamix_1">AdEMAMix 的可调超参数</h5>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>调优指南</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beta3</code></td>
+<td>0.9999</td>
+<td>应根据训练长度选择：<br>• 运行 &gt;120k 步：保持在 <strong>0.9999</strong><br>• 运行 ≤120k 步：尝试 <strong>0.999</strong><br><em>注意：我默认将其保持在 0.9999，但本指南遵循 AdEMAMix 论文的建议。</em></td>
+</tr>
+<tr>
+<td><code>alpha</code></td>
+<td>5</td>
+<td>AdEMAMix 的 EMA 贡献的乘数。<br>• 值 5 可能很高 - 考虑降低 LR。<br>• 如果训练发散，减少到 <strong>2-3</strong>。<br>• 增加以加强 AdEMAMix 的效果；减少以减弱它。</td>
+</tr>
+<tr>
+<td>&gt; ⚠️ <strong>注意</strong> AdEMAMix 需要比 Adam 低 2-4 倍的学习率才能保持稳定，因为它的更新步骤更大。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4 id="simplified_ademamix">Simplified_AdEMAMix：</h4>
+<p>这是 <a href="https://arxiv.org/abs/2502.02431"><em>Simplified_AdEMAMix</em> 论文（arXiv:2502.02431）</a> 中引入的一种有趣且独特的方法。
+既然 Adam 的 EMA 已被证明有益于大批量大小，而 AdEMAMix 的慢 EMA 有益于小批量大小，为什么不对齐这两种方法呢？
+这正是论文提出的：它用一个<strong>梯度累加器</strong>替换了 Adam 的第一矩（EMA），捕捉了两种方法的优势。论文从理论和经验上证明 - 当正确调优时，这个单一的修改累加器可以匹配甚至超过 Adam 和 AdEMAMix 的效率。</p>
+<blockquote>
+<p>📌 <strong>论文的关键见解</strong>：<br />
+经典动量方法（如 Adam 的 EMA）<strong>在嘈杂制度（小 BS）中不会加速优化器</strong>。<br />
+Simplified_AdEMAMix 中的<strong>累加器 + <code>Grad α</code></strong> 设计直接解决了这个问题：<br />
+- 累加器通过逐步累积梯度来加速优化器。<br />
+- <code>Grad α</code> 缩放原始梯度，允许对最近的更新进行可控强调，非常适合在小批量训练中穿透噪音。</p>
+</blockquote>
+<p>⚠️ <strong>重要兼容性说明</strong>：<br />
+由于其对第一矩的根本性修改：
+- 它与依赖标准动量的功能（如 <strong>Grams</strong>、<strong>Cautious</strong>）<strong>不兼容</strong>。</p>
+<hr />
+<h5 id="simplified_ademamix_1">Simplified_AdEMAMix 的可调超参数</h5>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>调优指南</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>beta1</code></td>
+<td>0.99</td>
+<td>现在控制累加器的<em>有效内存长度</em>（以前是 EMA 衰减）。<br>• <code>0.9</code> → ~10 步内存 → 对于小批量<strong>太短</strong>。<br>• 对于小批量大小，使用 <strong>0.99 到 0.9999</strong>，取决于训练长度和所需的稳定性。</td>
+</tr>
+<tr>
+<td><code>Grad α 平滑因子</code></td>
+<td>100</td>
+<td><strong>最关键的调优参数。</strong> 控制最终更新中原始、当前梯度的权重。<br>• 应与批量大小<strong>成反比</strong>缩放（即随着批量大小增加线性减少）。<br>• <strong>高值（10-100）</strong>：强调最近的梯度，非常适合小批量穿透噪音并快速适应。</td>
+</tr>
+</tbody>
+</table>
+<h5 id="simplified-ademamix">如何调优 Simplified AdEMAMix</h5>
+<p>这是 Sim AdEMAMix 超参数的简单指南。使用这些规则作为近似值来找到您的初始起始值。</p>
+<h6 id="beta1">beta1（长期动量）</h6>
+<p>目标是设置一个相对于您的数据集大小具有半衰期的长期动量。
+ * 计算有效步骤：
+   <code>effective_steps = total_images / (batch_size * accumulation_steps)</code></p>
+<ul>
+<li>计算 beta1：
+   <code>beta1 = 1 - (1 / (effective_steps / 2))</code></li>
+</ul>
+<p>这确保 beta1 每次更新覆盖您数据集的一半。</p>
+<h6 id="alpha-grad">Alpha Grad</h6>
+<p>alpha grad 可以通过假设它与您的总批量大小线性缩放来简化。我们使用 alpha = 100 作为批量大小为 1 的基线。
+ * 公式：
+   <code>alpha_grad = 100 / (batch_size * accumulation_steps)</code></p>
+<p>实际示例
+如果您有 880 张图像，批量大小为 2，累积步骤为 4：
+ * 有效步骤：880 / (2 * 4) = 110
+ * beta1：1 - (1 / 55) = 0.98
+ * Alpha Grad：100 / (2 * 4) = 12.5</p>
+<p>这些值提供了坚实的基线。</p>
+<hr />
+<h4 id="atan2">Atan2：</h4>
+<p>一种简单而有效的 Adam 基优化器方法，它改进了 <code>eps</code> 超参数，<strong>完全替换了它</strong>并使优化器具有尺度不变性。</p>
+<p>它将更新步骤限制在 <code>[-2, 2]</code> 范围内，有效地充当内置的<strong>更新裁剪</strong>，以防止优化过程中的大型、不稳定的跳跃。</p>
+<blockquote>
+<p>✅ <strong>强烈推荐用于不稳定的优化器</strong>：<br />
+这对于像 <code>Adopt_Adv</code> 这样的优化器特别有益，它们通常需要高 <code>eps</code> 值和更新裁剪才能在训练期间保持稳定。</p>
+</blockquote>
+<hr />
+<h4 id="kourkoutas-"><strong>Kourkoutas-β</strong></h4>
+<p><strong><a href="https://arxiv.org/abs/2508.12996">Kourkoutas-β</a></strong> 引入了一种<strong>太阳尖峰驱动的、逐层自适应的第二矩衰减（β₂）</strong>，作为 <code>Adam_Adv</code>、<code>Adopt_Adv</code>、<code>Prodigy_Adv</code> 和 <code>Simplified_AdEMAMix</code> 的可选增强。</p>
+<p>它不使用固定的 β₂（如 0.999 或 0.95），而是基于有界的<em>太阳尖峰比率</em> <strong>逐层动态调制 β₂</strong>：</p>
+<ul>
+<li><strong>在梯度爆发期间</strong> → β₂ ↓ 向 <code>较低 β₂</code> → 更快反应  </li>
+<li><strong>在平静阶段</strong> → β₂ ↑ 向 <code>选定的 β₂</code> → 更强的平滑  </li>
+</ul>
+<p>这对于<strong>嘈杂训练、小批量大小和高学习率</strong>特别有效，其中梯度范数由于噪音或激进的 LR 调度而突然变化。</p>
+<h5 id="_5">优点/缺点</h5>
+<table>
+<thead>
+<tr>
+<th><strong>类别</strong></th>
+<th><strong>详情</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✅ <strong>优点</strong></td>
+<td>• <strong>逐层适应</strong>融合了高 β₂（强平滑）和低 β₂（快速反应）的好处。<br>• <strong>对突然的损失景观变化具有鲁棒性</strong>，在梯度爆发期间快速反应，在平静阶段平滑。<br>• <strong>对激进的学习率具有高容忍度</strong>。</td>
+</tr>
+<tr>
+<td>⚠️ <strong>缺点</strong></td>
+<td>• <strong>在训练开始时可能不稳定</strong>，因为早期梯度范数不可靠；通过使用 <code>K-β 预热步骤</code>来缓解。</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>最佳实践</strong>：将 <code>K_warmup_steps</code> 设置为等于您的标准 LR 预热步骤。在预热期间，优化器使用静态的 <code>beta2</code>；仅在预热结束后才开始适应。</p>
+</blockquote>
+<h5 id="_6">用法</h5>
+<ul>
+<li>启用 <code>Kourkoutas Beta</code>  </li>
+<li>设置 <code>beta2 = 0.999</code> 并让它适应。</li>
+</ul>
+<hr />
+<h4 id="cwd">谨慎权重衰减（CWD）：</h4>
+<p>这是 <a href="https://arxiv.org/abs/2510.12402">一项新技术</a>，它改进了<strong>权重衰减</strong>的应用方式。</p>
+<p>在标准优化（如 AdamW 或 Lion）中，权重衰减<em>总是</em>将参数拉向零，不管损失函数想要什么。这经常造成冲突，即优化器想要增加一个值，但权重衰减通过试图减少它来对抗它。</p>
+<p><strong>CWD</strong> 通过应用一个简单的逻辑掩码来解决这个问题：
+*   <strong>如果优化器更新和参数符号对齐（一致）：</strong> 应用权重衰减以帮助缩小值。
+*   <strong>如果它们不一致（冲突）：</strong> 关闭该特定参数的权重衰减，让优化器完成它的工作。</p>
+<h5 id="cautious-c-optim">与"Cautious 变体"（C-Optim）的比较</h5>
+<p>不要将 <strong>Cautious</strong> 与 <strong>谨慎权重衰减</strong>混淆：
+*   <strong>Cautious（C-Optim）：</strong> 基于动量对齐掩蔽<em>优化器更新</em>。
+*   <strong>谨慎权重衰减（CWD）：</strong> 基于参数对齐掩蔽<em>权重衰减</em>。
+*   <em>您可以同时使用两者吗？</em> <strong>是的。</strong> 它们作用于步函数的不同部分。</p>
+<h5 id="_7">用法</h5>
+<ul>
+<li>只需启用它并将您的 <code>权重衰减</code> 设置为 <code>&gt; 0</code> 的值。</li>
+<li><strong>无需调优：</strong> 它使用与您通常使用的完全相同的 <code>权重衰减</code> 值。</li>
+<li><strong>性能：</strong> 论文证明在视觉和 LLM 任务上都始终具有更低的最终损失和更好的泛化能力。</li>
+</ul>
+<hr />
+<h4 id="factored"><code>Factored</code> 注意事项：</h4>
+<ul>
+<li>
+<p>当 <code>Factored</code> 启用（<code>True</code>）时，它将分解<strong>所有优化器状态</strong>。无论它们属于 AdEMAMix 的慢 EMA、Simplified_AdEMAMix 的累加器还是 Lion 的动量。</p>
+</li>
+<li>
+<p><strong>优化器对 <code>Factored</code> 1 位分解的容忍度排名</strong>：</p>
+</li>
+<li><strong>Lion</strong>：最容忍 - 在我的测试中产生<strong>相同的结果</strong>。</li>
+<li><strong>Simplified_AdEMAMix</strong>：下一个 - 由于其基于原始、未压缩梯度的大更新，它应该产生<strong>相同或非常可比的结果</strong>。</li>
+<li><strong>Adam / Prodigy / Adopt</strong>：提供<strong>可比的结果</strong> - 并且仍然值得用于内存节省（<strong>优化器状态小 16-32 倍</strong>）。</li>
+</ul>
+<hr />
+<h4 id="prodigy_adv"><code>Prodigy_Adv</code> 注意事项：</h4>
+<ul>
+<li><strong><code>PRODIGY_Adv</code> 超参数注意事项</strong>：</li>
+<li><code>beta3</code> = Prodigy 计算的 <code>beta3</code>；留空，不会有伤害。  </li>
+<li><code>beta3 EMA</code> = AdEMAMix 的 EMA 的 <code>beta3</code>，您可以根据运行长度进行调优。它仅在 <code>AdEMAMix EMA</code> 为 true 时生效。</li>
+</ul>
+<hr />
+<h4 id="lion_prodigy_adv"><code>Lion_Prodigy_Adv</code> 注意事项：</h4>
+<ul>
+<li>Lion 是一种基于符号的优化器，每步产生大更新。这也可能 destabilize Prodigy 计算，导致 LR 被高估。在较新版本中，我们为其添加了选项 <code>d_limiter</code>。这默认是 <code>True</code>，应该保持 True，因为它迫使 Prodigy 与 Lion 良好配合，产生合适的 LR。</li>
+</ul>
+<hr />
+<h4 id="_8">其他注意事项：</h4>
+<ul>
+<li>
+<p>对于优化器（<strong><code>Adam_Adv</code>、<code>ADOPT_Adv</code>、<code>Prodigy_Adv</code></strong>）：当 <code>beta1</code> 设置为 <code>0</code>（或未设置/<code>None</code>）时，优化器将<strong>完全跳过第一矩（标准 EMA）</strong>。<br />
+  ✅ 这与 <code>use_AdEMAMix</code> 选项完全兼容，允许您<strong>只使用 AdEMAMix 的慢 EMA</strong>，同时绕过 Adam 的传统动量。非常适合标准 EMA 几乎没有价值的小批量训练</p>
+</li>
+<li>
+<p><strong>Lion</strong> 是与 <code>AdEMAMix</code>/<code>Simplified_AdEMAMix</code> 关系最密切的优化器，因为其典型设置为 <code>beta1 &lt; beta2</code>（如 0.9 和 0.99）。与历史动量相比，这给原始梯度提供了大约 <strong>10 倍的权重</strong>。行为类似于 <code>alpha=10</code> 的 <code>Simplified_AdEMAMix</code>，但使用<em>符号操作</em>而不是自适应学习率缩放。</p>
+</li>
+<li>
+<p><strong>跨优化器的更新规则差异</strong>：</p>
+</li>
+<li><code>AdEMAMix</code>：<br />
+<code>update = fast_EMA + (α * slow_EMA)</code><br />
+  → 将短期 EMA 与放大的长期 EMA 混合。</li>
+<li><code>Simplified_AdEMAMix</code>：<br />
+<code>update = (α * grad) + accumulator</code><br />
+  → 直接缩放当前梯度并将其添加到衰减的累加器中。</li>
+<li>
+<p><code>Adam</code>：<br />
+<code>update = first_moment_EMA</code><br />
+  → 梯度的标准指数移动平均。</p>
+</li>
+<li>
+<p><strong>可跳过超参数的注意事项</strong>：  </p>
+</li>
+<li>当 <code>AdEMAMix EMA</code> 为 <code>False</code> 时，<code>beta3 EMA</code> 和 <code>alpha</code> 参数将被跳过并且没有效果。  </li>
+<li>当 <code>Simplified_AdEMAMix</code> 为 <code>False</code> 时，<code>grad α</code> 参数将被跳过并且没有效果。</li>
+</ul>
+<hr />
+<h3 id="_9">⚙️ 配置指南</h3>
+<h4 id="_10">🤏 "我的批量大小很小"配置：</h4>
+<ul>
+<li><strong>优化器：</strong> <code>ADOPT_Adv</code>（最初为小 BS 提出）。</li>
+<li><strong>Simplified AdEMAMix：</strong> <code>True</code></li>
+<li><strong>a Grad：</strong> <code>100.0</code>（高响应性，对小 BS 有益）。</li>
+<li><strong>beta1：</strong> <code>0.99</code> 到 <code>0.9999</code>（长期动量，对小 BS 有益）。</li>
+<li><strong>Atan2 缩放：</strong> <code>True</code>（为 ADOPT 保持此设置开启，在 ADOPT 情况下它适用于 Simplified AdEMAMix）。</li>
+<li><strong>Kourkoutas Beta：</strong> <code>True</code>（为嘈杂/不稳定训练或/和不良调优提供更多稳定性）。</li>
+<li><strong>学习率：</strong> 与往常相同。</li>
+<li><strong>权重衰减：</strong> 与往常相同</li>
+</ul>
+<h4 id="vram">🥔 "我 VRAM 低"配置：</h4>
+<ul>
+<li><strong>优化器：</strong> 任何 <code>_Adv</code> 优化器</li>
+<li><strong>Factored 优化器：</strong> <code>True</code></li>
+<li><strong>融合反向传播：</strong> <code>True</code></li>
+<li>为了进一步减少 VRAM，您可以在基于 Adam 的优化器中将 <code>beta1</code> 设置为 0，但是这将完全跳过动量。</li>
+</ul>
+<h4 id="bs">🧙‍♂️ "小 BS 的旧魔法预设"配置：</h4>
+<p>这是（以前）对我来说效果最好的预设，并在我的（旧）测试（微调/LoRA/嵌入）中提供了最强/最快的结果：</p>
+<pre><code class="language-yaml">学习率: 1
+optimizer: PRODIGY_Adv
+settings:
+  - beta1: 0.99 # 控制动量衰减，~100 步有效内存。根据训练长度和稳定性需求调整为 0.999（1000 步）或 0.9999（10000 步）。
+  - beta2: 0.999 # 因为我们将使用 k-b。
+  - Simplified_AdEMAMix: True
+  - Grad α: 100 # 控制更新中原始梯度的权重
+  - OrthoGrad: True
+  - weight_decay: 0.0
+  - d_coef: 1
+  - Kourkoutas Beta: True
+  - K-β 预热步骤: 20 # 在 20-200 范围内或您通常用于 LR 的预热步骤数。
+  - factored: False # 可以是 true 或 false，由于 Simplified_AdEMAMix 对 1 位分解的高容忍度，质量不应下降。
+</code></pre>
+<p>✅ <strong>为什么这效果好</strong>：
+- <code>beta1=0.99</code> 稳定了动量，同时允许 <code>Simplified_AdEMAMix</code> 通过原始梯度主导更新方向。
+- <code>beta2=0.999</code> 和 <code>Kourkoutas Beta</code> 稳定了优化器，同时逐层适应 <code>beta2</code>。
+- <code>Grad α=100</code> 强调最近的梯度 - 非常适合小批量、嘈杂制度。
+- <code>OrthoGrad</code> 防止过拟合而不需要权重衰减（设置 <code>weight_decay=0.0</code>）。或者您可以为 LoRA 和嵌入使用 weight_decay，因为对它们是安全的。
+- <code>factored=True</code> 启用优化器状态的 1 位分解，提供 <strong>16-32 倍内存减少</strong>，精度损失最小。这要归功于 <code>Simplified_AdEMAMix</code> 对状态压缩的固有容忍度（因为其更新严重依赖原始、未压缩的梯度）。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1789 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Common-Mistakes-Coming-From-Kohya/">
+      
+      
+        <link rel="next" href="../Custom-Scheduler/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>概念选项卡概览 - OneTrainer 使用说明</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="OneTrainer 使用说明" class="md-header__button md-logo" aria-label="OneTrainer 使用说明" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            OneTrainer 使用说明
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              概念选项卡概览
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="OneTrainer 使用说明" class="md-nav__button md-logo" aria-label="OneTrainer 使用说明" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    OneTrainer 使用说明
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Additional-Embeddings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Additional Embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Advanced-Optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced Optimizers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Aspect-Ratio-Bucketing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    理解宽高比（AR）分桶：简单指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Backup-and-Save/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    备份选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chroma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chroma
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Cloud-Training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Training
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Common-Mistakes-Coming-From-Kohya/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Common Mistakes Coming From Kohya
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概念选项卡概览
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概念选项卡概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概念选项卡界面
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概念设置 - 通用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图像增强选项卡
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Custom-Scheduler/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Scheduler
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dev-Corner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dev Corner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Developing-Locally%2C-Training-Remotely-on-Runpod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    在云端开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Diffusion-Models-Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OneTrainer 中扩散模型的特定模型技术信息
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Embedding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Embedding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../F.A.Q./" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    F.A.Q.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Flux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flux
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../General/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-Started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    概览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How-Validation-works/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How Validation works
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How-to-setup-and-evaluate-validation-datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to setup and evaluate validation datasets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Info%2C-Guides-and-Lessons-Learned/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Info, Guides and Lessons Learned
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lessons-Learnt-and-Tutorials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lessons Learnt and Tutorials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LoRA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LoRA 选项选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Manually-setup-OneTrainer-in-Runpod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Manually setup OneTrainer in Runpod
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model-Support-Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model Support Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Onboarding-Guide-for-Newcomers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding Guide for Newcomers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OneTrainer-March-2024-Guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OneTrainer March 2024 Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分解优化器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Orthogonal-Optimizers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Orthogonal Optimizers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Other-Tools-%E2%80%90-Helpful-Links/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Other Tools ‐ Helpful Links
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prior-Prediction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    先验预测背景：
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Quantization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    使用量化和编译的 LoRA 训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Image/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qwen Image
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Sampling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    采样选项卡
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Some-programmes-that-complement-Cloudy-OT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Some programmes that complement Cloudy OT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../The-Program/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Program
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Training-on-a-remote-Linux-Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training on a remote Linux Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Training/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Training
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_Footer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+     Footer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../_Sidebar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+     Sidebar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概念选项卡界面
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        概念设置 - 通用
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图像增强选项卡
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">概念选项卡概览</h1>
+<p>概念（Concepts）选项卡用于定义 OneTrainer 的数据集。概念是任意的数据桶 + 定义增强方式，它们可以包含训练数据、'reg'（正则化）数据或验证数据。拥有多个概念是很常见的情况。</p>
+<h2 id="_2">概念选项卡界面</h2>
+<p><img alt="image" src="https://github.com/Nerogar/OneTrainer/assets/132208482/2d02d53d-3937-444e-9b6a-9c8930924f57" /></p>
+<p>该选项卡包含以下元素：</p>
+<ul>
+<li>
+<p><strong>下拉菜单（默认：concepts）：</strong><br />
+  在多个概念配置之间进行选择。OneTrainer 仅使用当前选中的配置进行训练。</p>
+</li>
+<li>
+<p><strong>添加配置（Add Config）：</strong><br />
+  打开一个界面，输入名称并创建新的概念配置。</p>
+</li>
+<li>
+<p><strong>添加概念（Add Concept）：</strong><br />
+  在当前配置中创建一个新的、默认的空白概念。</p>
+</li>
+<li>
+<p><strong>删除概念（Delete Concept，红色 X）：</strong><br />
+  从配置中移除一个概念。</p>
+</li>
+<li>
+<p><strong>复制概念（Duplicate Concept，绿色加号）：</strong><br />
+  复制现有概念及其所有设置。</p>
+</li>
+<li>
+<p><strong>启用概念（Enable Concept，开关，默认：开启）：</strong><br />
+  切换是否使用此概念进行训练。启用时，开关显示为蓝色。</p>
+</li>
+<li>
+<p><strong>编辑概念（Edit Concept）：</strong><br />
+  点击概念图片的任意部分（按钮和开关除外）会打开设置窗口以进行进一步修改。</p>
+</li>
+</ul>
+<h2 id="-">概念设置 - 通用</h2>
+<p><img alt="image" src="https://github.com/user-attachments/assets/9071e1eb-c300-4090-baf3-565a3da7a698" /></p>
+<p>本节涵盖基本信息、平衡和缓存设置。</p>
+<ul>
+<li>
+<p><strong>名称（Name，默认：空白）：</strong><br />
+  为您的概念输入名称。如果留空，关闭窗口时将默认为提供的文件夹名称。</p>
+</li>
+<li>
+<p><strong>已启用（Enabled，默认：True）：</strong><br />
+  与上一个选项卡（概念）上的开关相对应；它控制 OneTrainer 是否使用此概念进行训练。</p>
+</li>
+<li>
+<p><strong>概念类型（Concept Type，默认：Standard）：</strong><br />
+  下拉菜单，您可以选择此概念是常规训练概念、验证概念（用于验证损失）还是先验预测概念（用于先验预测模型保留）。关于验证，请参阅 <a href="https://github.com/Nerogar/OneTrainer/wiki/How-Validation-works">验证如何工作</a> 了解更多信息。关于先验预测的更多信息，请参阅 <a href="https://github.com/Nerogar/OneTrainer/wiki/Prior-Prediction">先验预测</a>。</p>
+</li>
+<li>
+<p><strong>路径（Path，默认：空白）：</strong><br />
+  输入或粘贴概念图片的路径。您也可以点击（...）按钮浏览文件夹。</p>
+</li>
+<li>
+<p><strong>提示词来源（Prompt Source，默认：from text file per sample）：</strong><br />
+  从三个选项中选择一个：</p>
+</li>
+<li><strong>每个样本来自文本文件（From text file per sample）：</strong><br />
+     例如，<code>0001.jpg</code> 使用 <code>0001.txt</code> 文件作为其提示词。多个描述（每行一个）将允许 OneTrainer 在每个 epoch 中随机选择一个。</li>
+<li><strong>来自单个文本文件（From single text file）：</strong><br />
+     使用一个文本文件作为所有图像的提示词。</li>
+<li>
+<p><strong>来自图像文件名（From image file name）：</strong><br />
+     例如，<code>tag1 tag2 tag3.jpg</code> 使用 "tag1 tag2 tag3" 作为提示词。</p>
+</li>
+<li>
+<p><strong>包含子目录（Include Subdirectories，默认：False）：</strong><br />
+  将子目录中的图像视为单个概念的一部分，以便于管理。</p>
+</li>
+<li>
+<p><strong>图像变体（Image Variations，默认：1）：</strong><br />
+  控制使用增强变量缓存多少张图像。使用图像增强和潜在缓存时需要此设置。</p>
+</li>
+<li>
+<p><strong>文本变体（Text Variations，默认：1）：</strong><br />
+  定义为每张图像缓存多少个提示词变体。使用文本增强或多行描述时需要此设置。（注意：训练文本编码器（TE）或嵌入时，提示词不会被缓存，因此此设置不是必需的。但是，如果您进行了缓存但不训练 TE 或嵌入，则必须增加变体数量，否则将始终相同）</p>
+</li>
+<li>
+<p><strong>平衡（Balancing，默认：1 Repeats）：</strong><br />
+  平衡每个概念的贡献。例如，当您有 10,000 张正则化图像和 100 张源图像时，这很有用。有两种模式：</p>
+</li>
+<li><strong>重复次数（Repeats，默认：1 即无）：</strong><br />
+    每个 epoch 将源图像的数量乘以定义的值。</li>
+<li><strong>采样（Sample）：</strong><br />
+    每个 epoch 使用精确数量的随机选择图像，无论可用总数是多少。</li>
+<li>
+<p><strong>关于图像选择方法的说明：</strong><br />
+    图像选择是确定性的，但带有随机性。例如：对于 100 张图像的概念，repeat 0.2 或 20 个样本将在第一个 epoch 随机选择 20 张图像，然后从剩余的 80 张中再随机选择 20 张，依此类推。这意味着所有图像将在 5 个 epoch 后全部被使用。</p>
+</li>
+<li>
+<p><strong>损失权重（Loss Weight，默认：1）：</strong><br />
+  调整每个概念在训练过程中的影响。较低的值可用于正则化图像等概念，如果它们的影响过大的话。</p>
+</li>
+</ul>
+<h2 id="_3">图像增强选项卡</h2>
+<p><img alt="image" src="https://github.com/user-attachments/assets/f2b023ff-d77a-4b2c-ade3-a1349999757a" /></p>
+<p>此选项卡提供通过图像增强来丰富数据集的选项，这对于小数据集尤为重要。增强可以是随机的或固定的——此设置需要要么禁用潜在缓存（通过每个 epoch 缓存），要么使用图像变体。</p>
+<ul>
+<li>
+<p><strong>更新预览（Update Preview）：</strong><br />
+  生成图像和文本增强的预览。预览图像下方的开关可以禁用预览的增强，如果您需要查看未修改的图像和描述。对于随机设置，重复点击将让您更好地了解增强的应用强度。</p>
+</li>
+<li>
+<p><strong>裁剪抖动（Crop Jitter，默认：开启）：</strong><br />
+  如果 OneTrainer 需要裁剪图像，此选项会应用随机的非居中裁剪以增加多样性。</p>
+</li>
+<li>
+<p><strong>随机翻转（Random Flip，默认：开启）：</strong><br />
+  沿垂直轴翻转图像，可以是随机的或固定的。</p>
+</li>
+<li>
+<p><strong>随机旋转（Random Rotation，默认：关闭 - 0）：</strong><br />
+  将图像随机旋转最多指定的度数，或者如果设置了则使用固定旋转。</p>
+</li>
+<li>
+<p><strong>随机亮度（Random Brightness，默认：关闭 - 0）、随机对比度（Random Contrast，默认：关闭 - 0）、随机饱和度（Random Saturation，默认：关闭 - 0）、随机色相（Random Hue，默认：关闭 - 0）：</strong><br />
+  每个设置都会通过随机方差或固定值调整相应的图像属性。</p>
+</li>
+<li>
+<p>**分辨率覆盖（Resolution Override，默认：关闭 - 512）- 此功能可用于覆盖概念的训练分辨率。禁用时，One Trainer 将图像重新缩放到您的训练分辨率。换句话说，当分辨率覆盖关闭时，图像会被放大/缩小到训练分辨率；当分辨率覆盖开启时，图像会被放大/缩小到分辨率覆盖字段中设置的值。</p>
+</li>
+</ul>
+<p>可能的值：可以是单个分辨率或用逗号分隔的多个分辨率，或者是宽 x 高格式的单个分辨率。如果您设置了多个分辨率，分辨率选择是随机的，您需要增加图像变体。但请记住，缓存图像时分辨率选择仍然是随机的，这意味着有 2 个分辨率且图像变体设置为 2 时，相同的分辨率可能会被缓存两次。另请注意，概念中的每张图像都会随机应用其中一个分辨率。
+  - 激活后，它可用于两个目的：
+    - 使用 <a href="https://github.com/Nerogar/OneTrainer/wiki/Lessons-Learnt-and-Tutorials#multi-resolution-training">多分辨率训练</a>（用逗号分隔的多个训练分辨率）时，它将使用相同分辨率的概念图像。
+    - 为了防止图像放大，您可以以 1024（目标分辨率）训练，而 512 或 256 的图像不会被放大。训练将在 512 或 256 下进行。这对低质量图像有帮助。</p>
+<h1 id="_4">文本增强选项卡</h1>
+<p><img alt="Screenshot 2024-11-09 215015" src="https://github.com/user-attachments/assets/54955edf-89f2-4087-84a5-c25c59d70db3" /></p>
+<p>文本增强会修改每张图像的描述。描述是由第一个选项卡上的"提示词来源"设置定义的完整文本，并使用自定义的<strong>分隔符</strong>（通常是逗号）拆分为"标签"。每个 epoch 都会为每张图像生成新的变体，因此使用更多 epoch 且每个概念的重复/样本更少可以最大化文本变化。这些变体有助于防止过拟合并提高提示词的灵活性。根据模型的不同，您可能会通过基于标签或自然语言的描述获得更好的结果。</p>
+<h3 id="_5">标签打乱</h3>
+<p>随机化描述中标签的顺序。这有助于抵消放置在开头的标签的任何意外重要性。<strong>保留标签数量（Keep Tag Count）</strong> 设置确保指定数量的标签保留在前面，保留关键的"触发词"（注意这些在 OT 中不是真实存在的东西）。</p>
+<p><strong>保留标签数量</strong> 将指定始终保留在描述前面的标签数量。如果在特定概念上训练 LoRA，最好将该概念的名称（即"触发词"）保留在前面，以使训练更专注于它。</p>
+<h3 id="_6">标签/描述丢弃</h3>
+<p>随机移除一些标签，以帮助提高较短提示词的性能。但是，丢弃太多标签可能会降低模型区分概念的能力。<strong>保留标签数量</strong> 和<strong>分隔符</strong>设置都适用于此过程。</p>
+<p><strong>概率（Probability）</strong> 设置（取值在 0 到 1 之间）控制丢弃的几率，有三种模式可用：
+- <strong>全部（Full）：</strong><br />
+  要么以设定的概率移除所有标签（除了由<strong>保留标签数量</strong>保留的标签），要么保持描述不变。
+- <strong>随机（Random）：</strong><br />
+  单独评估每个标签是否可能被移除。
+- <strong>随机加权（Random Weighted）：</strong><br />
+  功能类似于<strong>随机</strong>，但降低了丢弃开头标签的几率（线性增加到末尾）。</p>
+<p>您还可以定义<strong>特殊标签（Special Tags）</strong> 列表。这些标签是：
+- <strong>白名单：</strong> 始终保留在描述中，其他所有内容都可能被丢弃
+- <strong>黑名单：</strong> 只有这些标签会被丢弃，而其他标签保持不变。  </p>
+<p>特殊标签可以以逗号分隔列表的形式提供，或者作为文件路径（.txt 或 .csv 格式），每个新条目占一行。如果启用了<strong>特殊标签正则表达式（Special Tags Regex）</strong>，您可以使用正则表达式模式（例如 "photo.<em>"、"\d.</em>"、"d.{1}g"）来匹配相关标签。</p>
+<p><em>注意：</em> 如果标签包含正则表达式特殊字符（如 . ^ $ * + ? ! { } [ ] | ( ) \），请用反斜杠转义它们（例如 "Panic\! at the Disco"）。</p>
+<h3 id="_7">随机大小写</h3>
+<p>此功能对描述中的标签应用各种大小写样式。每个标签都有机会根据定义的概率获得以下样式之一：
+- <strong>全大写（capslock）：</strong> 所有字母大写。
+- <strong>标题（title）：</strong> 每个单词的首字母大写。
+- <strong>首字母（first）：</strong> 只有第一个单词大写。
+- <strong>随机（random）：</strong> 每个字母随机大小写。<br />
+如果启用了<strong>强制小写（Force Lowercase）</strong>，则在应用任何其他更改之前，整个描述会转换为小写。请注意，使用 CLIP 的模型（如 SD1/2/XL）会忽略大小写变化，因为它们不区分大小写，而基于 T5 的模型（如 SD3、Flux）会受到影响。</p>
+<h2 id="_8">概念统计</h2>
+<p><img alt="image" src="https://github.com/user-attachments/assets/329b2a7d-9540-4c45-8130-3f66689a6916" /></p>
+<p>此选项卡显示有关概念文件和文件夹的详细统计信息。OneTrainer 在您选择选项后扫描概念文件夹，并将详细信息保存到配置文件中。如果内容发生变化，请手动运行扫描以更新信息。</p>
+<ul>
+<li>
+<p><strong>基本统计（Basic Statistics）：</strong><br />
+  快速计算图像（和视频）、描述和掩码文件的数量。还会报告总文件大小。此扫描速度很快，对平衡很有用。</p>
+</li>
+<li>
+<p><strong>高级统计（Advanced Statistics）：</strong><br />
+  提供详细的见解，例如：</p>
+</li>
+<li>图像、掩码和描述是否正确配对。</li>
+<li>最小、最大和平均图像分辨率（以百万像素和尺寸计）。</li>
+<li>描述的长度和字数。</li>
+<li>图像宽高比的分布。<br />
+  此扫描更耗时，尤其是在硬盘存储上。将图像组织到子文件夹中（并启用"包含子目录"）可以提高速度。</li>
+</ul>
+<p>附加细节：
+- "配对的"掩码或描述与其对应的图像共享相同的基本名称（例如，"image1.jpg" 有 "image1-masklabel.png" 和 "image1.txt"）。未配对的文件表示存在问题，但不会影响训练，因为它们会被忽略。</p>
+<ul>
+<li>
+<p><strong>最小/最大/平均像素（Min/Max/Average Pixels）：</strong><br />
+  提供精确的尺寸。明显小于模型基础分辨率（SD1 为 512，SDXL 为 1024）的图像在放大时可能会导致伪影。</p>
+</li>
+<li>
+<p><strong>长度（帧）和 FPS（每秒帧数）：</strong><br />
+  这些适用于视频。如果视频的 fps 与目标不匹配（例如 Hunyuan 为 24），可能会显得太快或太慢。</p>
+</li>
+<li>
+<p><strong>最小/最大/平均描述（Min/Max/Average Captions）：</strong><br />
+  基于字符计数，并提供近似的字数。由于大多数模型基于 token 计数（每个单词大约 1-2 个 token），超过模型 token 限制的描述（例如基于 CLIP 的模型为 75 个 token）将被截断。</p>
+</li>
+<li>
+<p><strong>宽高比分桶（Aspect Bucketing）：</strong><br />
+  显示图像宽高比的分布。OneTrainer 在训练期间将图像裁剪为一组宽高比分桶。批次由具有相同比例的图像组成，因此如果没有足够的特定宽高比图像来填满批次，那么所有这些图像都将被丢弃。为了避免这种情况，请手动调整图像或增加每个 epoch 的重复/样本数。</p>
+</li>
+<li>
+<p><strong>注意：</strong><br />
+  如果在 Windows 的命令提示符中启动，统计选项卡功能可能无法工作，除非您在 Windows 10/11 上启用了 UTF-8 支持。</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "navigation.expand", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

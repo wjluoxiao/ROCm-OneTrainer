@@ -7,6 +7,49 @@ from typing import Any
 from modules.util.config.BaseConfig import BaseConfig
 from modules.util.type_util import issubclass_safe
 
+# ═══════════════════════════════════════════
+# 🔄 汉化反向映射：中文 → 英文 Enum 键
+# UI 显示中文，Model 层接收英文——MVC 架构正确姿势
+# 有新词条 KeyError 时在此追加即可
+# ═══════════════════════════════════════════
+REVERSE_I18N_MAP = {
+    # ── 时间单位 ──
+    '秒': 'SECOND', '分钟': 'MINUTE', '小时': 'HOUR',
+    # ── 训练周期/触发 ──
+    '轮次': 'EPOCH', '步数': 'STEP', '从不': 'NEVER', '永不': 'NEVER', '始终': 'ALWAYS', '总是': 'ALWAYS',
+    # ── 状态/开关 ──
+    '无': 'NONE', '标准': 'STANDARD', '验证': 'VALIDATION', '确定': 'ok',
+    # ── 调度器 ──
+    '恒定': 'CONSTANT', '线性': 'LINEAR', '余弦': 'COSINE',
+    # ── 批次模式 ──
+    '批次': 'BATCH', '全局批次': 'GLOBAL_BATCH', '双向': 'BOTH', '全局双向': 'GLOBAL_BOTH',
+    # ── 梯度累积 ──
+    '梯度累积': 'GRADIENT_ACCUMULATION',
+    # ── 概念类型 ──
+    '概念': 'concepts', 'Prior预测': 'PRIOR_PREDICTION', '预测': 'PRIOR_PREDICTION',
+    # ── 大小写模式 ──
+    '全大写': 'capslock', '首字母大写': 'title', '句首大写': 'first', '随机': 'random',
+    # ── 噪声调度 ──
+    'P2': 'P2',
+    # ── 采样 ──
+    '最小SNR伽马': 'MIN_SNR_GAMMA', '去偏估计': 'DEBIASED_ESTIMATION',
+    # ── 注意力 ──
+    '注意力-MLP': 'attn-mlp', '仅注意力': 'attn-only',
+    # ── 其他 ──
+    '完整': 'full', '基础': 'basic', '自定义': 'CUSTOM',
+    '重复次数': 'repeats', '重复': 'repeats',
+}
+
+# ═══════════════════════════════════════════
+# 🔄 正向映射：英文 Enum 键 → 中文显示
+# 加载配置时，将后端英文值翻译为中文显示在 UI 上
+# ═══════════════════════════════════════════
+FORWARD_I18N_MAP = {v: k for k, v in REVERSE_I18N_MAP.items()}
+for _k, _v in list(FORWARD_I18N_MAP.items()):
+    FORWARD_I18N_MAP[_k.lower()] = _v
+# ═══════════════════════════════════════════
+# ═══════════════════════════════════════════
+
 
 class UIState:
     __vars: dict[str, Any]
@@ -82,7 +125,7 @@ class UIState:
                 if (string_var == "" or string_var == "None") and nullable:
                     obj[name] = None
                 else:
-                    obj[name] = var_type[string_var]
+                    obj[name] = self._resolve_enum(var_type, string_var, name)
                 self.__call_var_traces(name)
         else:
             def update(_0, _1, _2):
@@ -90,10 +133,23 @@ class UIState:
                 if (string_var == "" or string_var == "None") and nullable:
                     setattr(obj, name, None)
                 else:
-                    setattr(obj, name, var_type[string_var])
+                    setattr(obj, name, self._resolve_enum(var_type, string_var, name))
                 self.__call_var_traces(name)
 
         return update
+
+    @staticmethod
+    def _resolve_enum(var_type, string_var, name):
+        """先反向映射中文→英文键，再查找 Enum，失败则告警并 fallback"""
+        key = REVERSE_I18N_MAP.get(string_var, string_var)
+        try:
+            return var_type[key]
+        except KeyError:
+            print(f"\n[架构告警] UIState 收到未知键值: '{string_var}' (字段: {name})，请添加到 REVERSE_I18N_MAP！\n")
+            try:
+                return var_type[list(var_type.__members__.keys())[0]]
+            except Exception:
+                return None
 
     def __set_bool_var(self, obj, is_dict, name, var):
         if is_dict:
@@ -199,7 +255,8 @@ class UIState:
                     new_vars[name] = var
                 elif issubclass_safe(var_type, Enum):
                     var = tk.StringVar(master=self.master)
-                    var.set("" if obj_var is None else str(obj_var))
+                    raw_val = "" if obj_var is None else str(obj_var)
+                    var.set(FORWARD_I18N_MAP.get(raw_val, raw_val))
                     var.trace_add("write", self.__set_enum_var(obj, is_dict, name, var, var_type, obj.nullables[name]))
                     new_vars[name] = var
                 elif var_type is bool:
@@ -229,7 +286,8 @@ class UIState:
                     new_vars[name] = var
                 elif isinstance(obj_var, Enum):
                     var = tk.StringVar(master=self.master)
-                    var.set(str(obj_var))
+                    raw_val = str(obj_var)
+                    var.set(FORWARD_I18N_MAP.get(raw_val, raw_val))
                     var.trace_add("write", self.__set_enum_var(obj, is_dict, name, var, type(obj_var), False))
                     new_vars[name] = var
                 elif isinstance(obj_var, bool):
