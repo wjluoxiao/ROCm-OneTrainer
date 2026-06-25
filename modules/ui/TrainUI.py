@@ -95,7 +95,7 @@ class TrainUI(ctk.CTk):
     def __init__(self):
         super().__init__()
 
-        self.title("OneTrainer")
+        self.title("OneTrainer-AMD显卡机智启动器专用版-B站：机智罗_LX")
         self.geometry("1100x740")
 
         self.after(100, lambda: self._set_icon())
