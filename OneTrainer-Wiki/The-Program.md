@@ -1,0 +1,16 @@
+此页面让您深入了解 OneTrainer 中各种 UI 选项卡的说明
+
+* [通用](https://github.com/Nerogar/OneTrainer/wiki/General)
+* [模型](https://github.com/Nerogar/OneTrainer/wiki/Model)
+* [数据](https://github.com/Nerogar/OneTrainer/wiki/Data)
+* [概念](https://github.com/Nerogar/OneTrainer/wiki/Concepts)
+* [训练](https://github.com/Nerogar/OneTrainer/wiki/Training)
+> * [优化器（WIP）](https://github.com/Nerogar/OneTrainer/wiki/Optimizers)
+> * [自定义调度器](https://github.com/Nerogar/OneTrainer/wiki/Custom-Scheduler)
+* [采样](https://github.com/Nerogar/OneTrainer/wiki/Sampling)
+* [备份和保存](https://github.com/Nerogar/OneTrainer/wiki/Backup-and-Save)
+* [工具](https://github.com/Nerogar/OneTrainer/wiki/Tools)
+* [额外嵌入](https://github.com/Nerogar/OneTrainer/wiki/Additional-Embeddings)
+* [云](https://github.com/Nerogar/OneTrainer/wiki/Cloud-Training)
+* [嵌入](https://github.com/Nerogar/OneTrainer/wiki/Embedding)
+* [LoRA](https://github.com/Nerogar/OneTrainer/wiki/LoRA)
